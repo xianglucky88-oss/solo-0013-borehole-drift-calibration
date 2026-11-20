@@ -1,0 +1,113 @@
+{
+  "project_shape": "backend",
+  "modules": [
+    {
+      "id": "contract",
+      "path": "borecal/contract.py",
+      "responsibility": "解析计划深度和观测"
+    },
+    {
+      "id": "drift",
+      "path": "borecal/drift.py",
+      "responsibility": "索引同探头参考点并插值"
+    },
+    {
+      "id": "profile",
+      "path": "borecal/profile.py",
+      "responsibility": "物化有效剖面与拒收证据"
+    },
+    {
+      "id": "archive",
+      "path": "borecal/archive.py",
+      "responsibility": "冻结数据集"
+    },
+    {
+      "id": "__main__",
+      "path": "borecal/__main__.py",
+      "responsibility": "提供文件导入与 JSON 查询入口"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "calibrate",
+      "name": "计算同探头的漂移校正",
+      "entry": "python3 -B -m borecal --db demo.sqlite publish examples/boring.json",
+      "success": "有效读数保留精确校正和参考行",
+      "failure": "跨超长参考跨度的读数隔离",
+      "verification": "python3 -B examples/smoke.py",
+      "module_ids": [
+        "contract",
+        "drift",
+        "profile",
+        "archive",
+        "__main__"
+      ],
+      "steps": [
+        "执行 publish examples/boring.json",
+        "有效读数保留精确校正和参考行"
+      ]
+    },
+    {
+      "id": "partition",
+      "name": "生成分深度事实和拒收数据",
+      "entry": "python3 -B -m borecal --db demo.sqlite publish examples/boring.json",
+      "success": "缺测计划层保留 null",
+      "failure": "未计划深度不应进入有效事实",
+      "verification": "python3 -B examples/smoke.py",
+      "module_ids": [
+        "contract",
+        "drift",
+        "profile",
+        "archive",
+        "__main__"
+      ],
+      "steps": [
+        "执行 publish examples/boring.json",
+        "缺测计划层保留 null"
+      ]
+    },
+    {
+      "id": "archive",
+      "name": "读取冻结的独立版本",
+      "entry": "python3 -B -m borecal --db demo.sqlite read basalt-17 winter-c01",
+      "success": "恢复摘要与完整剖面",
+      "failure": "找不到版本时拒绝",
+      "verification": "python3 -B examples/smoke.py",
+      "module_ids": [
+        "__main__",
+        "archive",
+        "contract"
+      ],
+      "steps": [
+        "执行 read basalt-17 winter-c01",
+        "恢复摘要与完整剖面"
+      ]
+    }
+  ],
+  "complexity": {
+    "mechanisms": [
+      {
+        "id": "calibrate",
+        "workflow_ids": [
+          "calibrate"
+        ],
+        "behavior": "有效读数保留精确校正和参考行"
+      },
+      {
+        "id": "partition",
+        "workflow_ids": [
+          "partition"
+        ],
+        "behavior": "缺测计划层保留 null"
+      },
+      {
+        "id": "archive",
+        "workflow_ids": [
+          "archive"
+        ],
+        "behavior": "恢复摘要与完整剖面"
+      }
+    ]
+  },
+  "sample_source": "examples/boring.json"
+}

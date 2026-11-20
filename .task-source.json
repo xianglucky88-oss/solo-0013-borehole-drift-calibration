@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "task_source_schema_version": 1,
+  "project_domain": "数据工程",
+  "project_subdirection": "数据分析与数据应用",
+  "delivery_profile": "local-unadmitted",
+  "baseline_tier": "local-workflow-baseline",
+  "generation_scope": {
+    "mode": "explicit",
+    "basis": "本轮只交付五个本地基线，未生成题库或评定题型容量。"
+  },
+  "production_source": "borecal",
+  "workflow_ids": [
+    "calibrate",
+    "partition",
+    "archive"
+  ],
+  "entities": [
+    {
+      "id": "reference",
+      "label": "标准参考观测"
+    },
+    {
+      "id": "reading",
+      "label": "探头现场读数"
+    },
+    {
+      "id": "depth_fact",
+      "label": "分深度事实"
+    },
+    {
+      "id": "profile_release",
+      "label": "校准版本"
+    }
+  ],
+  "state_machines": [
+    {
+      "subject": "profile_release",
+      "states": [
+        "absent",
+        "published"
+      ],
+      "transitions": [
+        "absent->published",
+        "published->published (replay)"
+      ]
+    }
+  ],
+  "capability_families": [
+    {
+      "family": "在探头独立时间轴产出可追溯校正",
+      "occupied_by": [
+        "calibrate"
+      ],
+      "available": false
+    }
+  ],
+  "extension_seams": [
+    {
+      "id": "drift-track",
+      "anchor": "borecal/drift.py",
+      "entry": "DriftIndex.correct",
+      "distinct_outcome": "在探头独立时间轴产出可追溯校正",
+      "mechanism": "calibrate"
+    }
+  ],
+  "tension_points": [
+    {
+      "workflow_id": "calibrate",
+      "description": "有效读数保留精确校正和参考行",
+      "observable_failure": "跨超长参考跨度的读数隔离"
+    },
+    {
+      "workflow_id": "partition",
+      "description": "缺测计划层保留 null",
+      "observable_failure": "未计划深度不应进入有效事实"
+    },
+    {
+      "workflow_id": "archive",
+      "description": "恢复摘要与完整剖面",
+      "observable_failure": "找不到版本时拒绝"
+    }
+  ]
+}

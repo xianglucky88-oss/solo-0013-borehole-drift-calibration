@@ -1,0 +1,24 @@
+{
+  "language": "Python",
+  "minimum_python": "3.9",
+  "project_shape": "backend",
+  "source_extensions": [
+    ".py"
+  ],
+  "build_command": "python3 -B -c 'from pathlib import Path; [compile(p.read_bytes(), str(p), \"exec\") for d in (\"borecal\", \"examples\") for p in Path(d).glob(\"*.py\")]'",
+  "testing": "deferred",
+  "workflow_checks": [
+    {
+      "workflow_id": "calibrate",
+      "command": "python3 -B examples/smoke.py"
+    },
+    {
+      "workflow_id": "partition",
+      "command": "python3 -B examples/smoke.py"
+    },
+    {
+      "workflow_id": "archive",
+      "command": "python3 -B examples/smoke.py"
+    }
+  ]
+}
