@@ -1,0 +1,30 @@
+{
+  "borehole": "basalt-19",
+  "version": "dwell-r01",
+  "max_reference_span_s": 4,
+  "depths_mm": [400, 600],
+  "stability": {
+    "stable_duration_s": 4,
+    "tolerance_mc": 10,
+    "sampling_interval_s": 2
+  },
+  "sign_policy": "first_window",
+  "references": [
+    {"probe": "jade", "at_s": 0, "observed_mc": 10000, "certified_mc": 10000},
+    {"probe": "jade", "at_s": 4, "observed_mc": 10000, "certified_mc": 10000},
+    {"probe": "jade", "at_s": 8, "observed_mc": 10000, "certified_mc": 10000}
+  ],
+  "dwells": [
+    {"dwell_id": "q1", "probe": "jade", "depth_mm": 400, "order": 1, "start_s": 0, "end_s": 8},
+    {"dwell_id": "q2", "probe": "jade", "depth_mm": 600, "order": 2, "start_s": 10, "end_s": 18}
+  ],
+  "readings": [
+    {"probe": "jade", "at_s": 0, "depth_mm": 400, "observed_mc": 8002},
+    {"probe": "jade", "at_s": 2, "depth_mm": 400, "observed_mc": 8000},
+    {"probe": "jade", "at_s": 4, "depth_mm": 400, "observed_mc": 8005},
+    {"probe": "jade", "at_s": 6, "depth_mm": 400, "observed_mc": 8010},
+
+    {"probe": "jade", "at_s": 12, "depth_mm": 600, "observed_mc": 7000},
+    {"probe": "jade", "at_s": 14, "depth_mm": 600, "observed_mc": 7002}
+  ]
+}

@@ -14,15 +14,22 @@ def main():
     read = commands.add_parser('read')
     read.add_argument('borehole')
     read.add_argument('version')
+    review = commands.add_parser('review')
+    review.add_argument('borehole')
+    review.add_argument('version')
     args = parser.parse_args()
     try:
         if args.command == 'publish':
             result = publish(args.db, json.loads(args.source.read_text(encoding='utf-8')))
         else:
             result = read_profile(args.db, args.borehole, args.version)
+            if args.command == 'review':
+                result = result.get('review')
+                if result is None:
+                    raise ValueError('this release contains no review')
     except (ValueError, KeyError, TypeError, OSError, sqlite3.Error) as error:
         parser.exit(2, f'error: {error}\n')
-    print(json.dumps(result, sort_keys=True))
+    print(json.dumps(result, sort_keys=True, ensure_ascii=False))
 
 
 if __name__ == '__main__':

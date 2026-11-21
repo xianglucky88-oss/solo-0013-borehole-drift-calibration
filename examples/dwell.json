@@ -1,0 +1,48 @@
+{
+  "borehole": "basalt-18",
+  "version": "dwell-c01",
+  "max_reference_span_s": 6,
+  "depths_mm": [500, 300, 700, 800, 100],
+  "stability": {
+    "stable_duration_s": 4,
+    "tolerance_mc": 10,
+    "sampling_interval_s": 2
+  },
+  "sign_policy": "first_window",
+  "references": [
+    {"probe": "garnet", "at_s": 0, "observed_mc": 10010, "certified_mc": 10000},
+    {"probe": "garnet", "at_s": 4, "observed_mc": 10012, "certified_mc": 10000},
+    {"probe": "garnet", "at_s": 7, "observed_mc": 10008, "certified_mc": 10000},
+    {"probe": "slate", "at_s": 10, "observed_mc": 9999, "certified_mc": 10000},
+    {"probe": "slate", "at_s": 16, "observed_mc": 9999, "certified_mc": 10000}
+  ],
+  "dwells": [
+    {"dwell_id": "d1", "probe": "garnet", "depth_mm": 500, "order": 1, "start_s": 0, "end_s": 8},
+    {"dwell_id": "d2", "probe": "slate", "depth_mm": 300, "order": 2, "start_s": 10, "end_s": 18},
+    {"dwell_id": "d3", "probe": "onyx", "depth_mm": 700, "order": 3, "start_s": 20, "end_s": 26},
+    {"dwell_id": "d4", "probe": "garnet", "depth_mm": 800, "order": 4, "start_s": 40, "end_s": 50},
+    {"dwell_id": "d5", "probe": "garnet", "depth_mm": 800, "order": 5, "start_s": 45, "end_s": 55}
+  ],
+  "readings": [
+    {"probe": "garnet", "at_s": 2, "depth_mm": 500, "observed_mc": 11000},
+    {"probe": "garnet", "at_s": 4, "depth_mm": 500, "observed_mc": 11000},
+    {"probe": "garnet", "at_s": 6, "depth_mm": 500, "observed_mc": 11000},
+    {"probe": "garnet", "at_s": 8, "depth_mm": 500, "observed_mc": 11010},
+
+    {"probe": "slate", "at_s": 12, "depth_mm": 300, "observed_mc": 9000},
+    {"probe": "slate", "at_s": 14, "depth_mm": 300, "observed_mc": 9000},
+    {"probe": "slate", "at_s": 16, "depth_mm": 300, "observed_mc": 9000},
+    {"probe": "slate", "at_s": 18, "depth_mm": 300, "observed_mc": 9010},
+
+    {"probe": "onyx", "at_s": 22, "depth_mm": 700, "observed_mc": 7000},
+
+    {"probe": "garnet", "at_s": 47, "depth_mm": 800, "observed_mc": 8000},
+
+    {"probe": "garnet", "at_s": 19, "depth_mm": 100, "observed_mc": 6000},
+    {"probe": "garnet", "at_s": 20, "depth_mm": 100, "observed_mc": 6001},
+    {"probe": "garnet", "at_s": 21, "depth_mm": 100, "observed_mc": 6002},
+    {"probe": "garnet", "at_s": 22, "depth_mm": 100, "observed_mc": 6003},
+
+    {"probe": "slate", "at_s": 13, "depth_mm": 301, "observed_mc": 9000}
+  ]
+}
