@@ -22,6 +22,41 @@
       "responsibility": "冻结数据集"
     },
     {
+      "id": "linsolve",
+      "path": "borecal/linsolve.py",
+      "responsibility": "精确有理数两阶段单纯形求联合可行域"
+    },
+    {
+      "id": "affineexpr",
+      "path": "borecal/affineexpr.py",
+      "responsibility": "证书误差与自由锚点上的仿射表达式"
+    },
+    {
+      "id": "certmodel",
+      "path": "borecal/certmodel.py",
+      "responsibility": "在停用假设下传播联测漂移并区分有锚自由分量"
+    },
+    {
+      "id": "ranges",
+      "path": "borecal/ranges.py",
+      "responsibility": "联合可行域上的中位范围与联合温差范围"
+    },
+    {
+      "id": "assess",
+      "path": "borecal/assess.py",
+      "responsibility": "评估假设并组装条件与无条件剖面"
+    },
+    {
+      "id": "delivery",
+      "path": "borecal/delivery.py",
+      "responsibility": "覆盖核验与条件无条件交付台账"
+    },
+    {
+      "id": "supplement",
+      "path": "borecal/supplement.py",
+      "responsibility": "部分覆盖后补证书且不改写原版本作用域"
+    },
+    {
       "id": "__main__",
       "path": "borecal/__main__.py",
       "responsibility": "提供文件导入与 JSON 查询入口"

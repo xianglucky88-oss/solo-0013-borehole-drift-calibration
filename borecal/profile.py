@@ -1,10 +1,13 @@
 """Build depth facts and a rejection dataset without discarding provenance."""
 from statistics import median
 
+from .assess import assess, unconditional_profile
+from .delivery import deliver
 from .drift import DriftIndex
 
 
 def build(depths, references, readings, max_span):
+    """Baseline direct-standard profile, unchanged for legacy inputs."""
     index = DriftIndex(references, max_span)
     bins = {depth: [] for depth in sorted(depths)}
     rejected = []
@@ -27,4 +30,33 @@ def build(depths, references, readings, max_span):
             for depth, rows in bins.items()
         ],
         'rejected': rejected,
+    }
+
+
+def build_certified(depths, references, readings, max_span, certificates,
+                    hypotheses, width_limit, requests):
+    """Assumption-aware profile over contradictory co-location certificates."""
+    assessments = assess(certificates, references, readings, max_span,
+                         hypotheses, depths, width_limit)
+    unconditional = unconditional_profile(assessments, width_limit)
+    delivery_responses = deliver(requests, assessments, unconditional,
+                                 certificates, width_limit)
+    return {
+        'hypotheses': [_serialize_assessment(model) for model in assessments],
+        'unconditional': unconditional,
+        'delivery': delivery_responses,
+    }
+
+
+def _serialize_assessment(model):
+    return {
+        'hypothesis': model['hypothesis'],
+        'feasible': model['feasible'],
+        'suspended_certificates': model['suspended'],
+        'depth_facts': model['depth_facts'],
+        'difference_facts': model['difference_facts'],
+        'rejected': model['rejected'],
+        'certificate_rejections': model['certificate_rejections'],
+        'anchored_components': model['anchored_components'],
+        'free_components': sorted(model['free_symbols']),
     }

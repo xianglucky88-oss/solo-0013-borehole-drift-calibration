@@ -1,0 +1,39 @@
+{
+  "borehole": "basalt-17",
+  "version": "winter-c04-supplement",
+  "max_reference_span_s": 6,
+  "temperature_width_limit_mc": 40,
+  "depths_mm": [100, 300, 600, 900],
+  "references": [
+    {"probe": "garnet", "at_s": 0, "observed_mc": 10002, "certified_mc": 10000},
+    {"probe": "garnet", "at_s": 6, "observed_mc": 10008, "certified_mc": 10000}
+  ],
+  "certificates": [
+    {
+      "certificate": "joint-gamma-partial",
+      "common_error_mc_min": -5,
+      "common_error_mc_max": 5,
+      "valid_from_s": 2,
+      "valid_to_s": 2,
+      "rows": [
+        {"joint_row": 1, "probe_a": "garnet", "probe_b": "onyx", "at_s": 2,
+         "observed_a_mc": 11010, "observed_b_mc": 11000}
+      ]
+    }
+  ],
+  "hypotheses": [
+    {"hypothesis": "partial-gamma", "suspended_certificates": []}
+  ],
+  "readings": [
+    {"probe": "garnet", "at_s": 2, "depth_mm": 100, "observed_mc": 12000},
+    {"probe": "garnet", "at_s": 4, "depth_mm": 100, "observed_mc": 12004},
+    {"probe": "onyx", "at_s": 2, "depth_mm": 300, "observed_mc": 11500},
+    {"probe": "onyx", "at_s": 4, "depth_mm": 300, "observed_mc": 11506}
+  ],
+  "delivery_requests": [
+    {"request": "covered-depth-100", "kind": "depth", "depth_mm": 100,
+     "hypothesis": "trust-alpha"},
+    {"request": "uncovered-depth-300", "kind": "depth", "depth_mm": 300,
+     "hypothesis": "trust-alpha"}
+  ]
+}

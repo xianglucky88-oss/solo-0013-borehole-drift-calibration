@@ -1,0 +1,67 @@
+{
+  "borehole": "basalt-17",
+  "version": "winter-c03",
+  "max_reference_span_s": 6,
+  "temperature_width_limit_mc": 40,
+  "depths_mm": [100, 300, 600, 900],
+  "references": [
+    {"probe": "garnet", "at_s": 0, "observed_mc": 10002, "certified_mc": 10000},
+    {"probe": "garnet", "at_s": 6, "observed_mc": 10008, "certified_mc": 10000},
+    {"probe": "slate", "at_s": 0, "observed_mc": 9995, "certified_mc": 10000},
+    {"probe": "slate", "at_s": 6, "observed_mc": 9995, "certified_mc": 10000}
+  ],
+  "certificates": [
+    {
+      "certificate": "joint-alpha",
+      "common_error_mc_min": -8,
+      "common_error_mc_max": 8,
+      "valid_from_s": 0,
+      "valid_to_s": 6,
+      "rows": [
+        {"joint_row": 1, "probe_a": "garnet", "probe_b": "onyx", "at_s": 2,
+         "observed_a_mc": 11010, "observed_b_mc": 11000},
+        {"joint_row": 2, "probe_a": "garnet", "probe_b": "onyx", "at_s": 4,
+         "observed_a_mc": 11020, "observed_b_mc": 11012}
+      ]
+    },
+    {
+      "certificate": "joint-beta",
+      "common_error_mc_min": -8,
+      "common_error_mc_max": 8,
+      "valid_from_s": 0,
+      "valid_to_s": 6,
+      "rows": [
+        {"joint_row": 1, "probe_a": "slate", "probe_b": "onyx", "at_s": 2,
+         "observed_a_mc": 9980, "observed_b_mc": 11000},
+        {"joint_row": 2, "probe_a": "slate", "probe_b": "onyx", "at_s": 4,
+         "observed_a_mc": 9990, "observed_b_mc": 11012}
+      ]
+    }
+  ],
+  "hypotheses": [
+    {"hypothesis": "trust-alpha", "suspended_certificates": ["joint-beta"]},
+    {"hypothesis": "trust-beta", "suspended_certificates": ["joint-alpha"]}
+  ],
+  "readings": [
+    {"probe": "garnet", "at_s": 2, "depth_mm": 100, "observed_mc": 12000},
+    {"probe": "garnet", "at_s": 4, "depth_mm": 100, "observed_mc": 12004},
+    {"probe": "onyx", "at_s": 2, "depth_mm": 300, "observed_mc": 11500},
+    {"probe": "onyx", "at_s": 4, "depth_mm": 300, "observed_mc": 11506},
+    {"probe": "slate", "at_s": 2, "depth_mm": 600, "observed_mc": 10500},
+    {"probe": "slate", "at_s": 4, "depth_mm": 600, "observed_mc": 10502},
+    {"probe": "jade", "at_s": 2, "depth_mm": 900, "observed_mc": 9500},
+    {"probe": "jade", "at_s": 4, "depth_mm": 900, "observed_mc": 9504}
+  ],
+  "delivery_requests": [
+    {"request": "unconditional-100", "kind": "depth", "depth_mm": 100},
+    {"request": "conditional-alpha-300", "kind": "depth", "depth_mm": 300,
+     "hypothesis": "trust-alpha"},
+    {"request": "conditional-beta-300", "kind": "depth", "depth_mm": 300,
+     "hypothesis": "trust-beta"},
+    {"request": "joint-diff-100-300-alpha", "kind": "difference",
+     "shallow_mm": 100, "deep_mm": 300, "hypothesis": "trust-alpha"},
+    {"request": "unanchored-900", "kind": "depth", "depth_mm": 900},
+    {"request": "unknown-window", "kind": "depth", "depth_mm": 900,
+     "hypothesis": "trust-alpha"}
+  ]
+}

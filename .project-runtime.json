@@ -19,6 +19,10 @@
     {
       "workflow_id": "archive",
       "command": "python3 -B examples/smoke.py"
+    },
+    {
+      "workflow_id": "certified-profile",
+      "command": "python3 -B examples/certified_smoke.py"
     }
   ]
 }

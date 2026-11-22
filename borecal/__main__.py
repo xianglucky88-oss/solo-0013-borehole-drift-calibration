@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import sqlite3
 
-from .archive import publish, read_profile
+from .archive import publish, read_delivery, read_profile
 
 
 def main():
@@ -14,15 +14,18 @@ def main():
     read = commands.add_parser('read')
     read.add_argument('borehole')
     read.add_argument('version')
+    commands.add_parser('delivery').add_argument('source', nargs=2, metavar=('BOREHOLE', 'VERSION'))
     args = parser.parse_args()
     try:
         if args.command == 'publish':
             result = publish(args.db, json.loads(args.source.read_text(encoding='utf-8')))
-        else:
+        elif args.command == 'read':
             result = read_profile(args.db, args.borehole, args.version)
+        else:
+            result = read_delivery(args.db, args.source[0], args.source[1])
     except (ValueError, KeyError, TypeError, OSError, sqlite3.Error) as error:
         parser.exit(2, f'error: {error}\n')
-    print(json.dumps(result, sort_keys=True))
+    print(json.dumps(result, sort_keys=True, ensure_ascii=False))
 
 
 if __name__ == '__main__':
